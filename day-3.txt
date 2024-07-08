@@ -73,3 +73,104 @@ class Solution {
         return ans;
     }
 }
+
+
+
+----------------- 
+sort colors 
+
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        l,r = 0 , len(nums)-1
+        i = 0 
+
+        while i <= r:
+            if nums[i] == 0:
+                nums[l], nums[i] = nums[i], nums[l]
+                l += 1
+            elif nums[i] == 2:
+                nums[r], nums[i] = nums[i], nums[r]
+                r -= 1
+                i -= 1           
+
+            i += 1 
+
+
+JAVA 
+======================================
+public class Solution {
+    public void sortColors(int[] nums) {
+        int l = 0, r = nums.length - 1;
+        int i = 0;
+
+        while (i <= r) {
+            if (nums[i] == 0) {
+                // Swap nums[i] and nums[l]
+                int temp = nums[i];
+                nums[i] = nums[l];
+                nums[l] = temp;
+                l++;
+            } else if (nums[i] == 2) {
+                // Swap nums[i] and nums[r]
+                int temp = nums[i];
+                nums[i] = nums[r];
+                nums[r] = temp;
+                r--;
+                i--;
+            }
+
+            i++;
+        }
+    }
+}
+
+
+=======================================================
+169 majority element
+
+Python
+========
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        res = None 
+        count = 0 
+
+        for i in range(len(nums)):
+            if count == 0 :
+                res = nums[i]
+            if nums[i] == res:
+                count += 1
+            else:
+                count -= 1
+
+        return res 
+        
+
+
+JAVA
+===========
+
+import java.util.List;
+
+public class Solution {
+    public int majorityElement(List<Integer> nums) {
+        Integer res = null;
+        int count = 0;
+
+        for (int num : nums) {
+            if (count == 0) {
+                res = num;
+            }
+            if (num.equals(res)) {
+                count += 1;
+            } else {
+                count -= 1;
+            }
+        }
+
+        return res;
+    }
+}
