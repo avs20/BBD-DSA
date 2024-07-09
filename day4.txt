@@ -1,0 +1,62 @@
+
+Product of Array Except self
+
+Python 
+class Solution(object):
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        O(n)
+        """
+        result = 1 
+        left = [1] * len(nums)
+        
+        for i in range(1,len(nums)):
+            left[i] = result * nums[i-1]
+            # print(left[i])
+            result = left[i]
+            
+        # print(left)
+        
+        result = 1
+        right = [1] * len(nums)
+        for i in reversed(range(len(nums)-1)):
+            right[i] = result * nums[i+1]
+            result = right[i]
+    
+        # print(right)
+        
+        result = [1] * len(nums)
+        for i in range(len(nums)):
+            result[i] = left[i] * right[i]
+            
+        return result
+            
+        
+
+
+JAVA Solution
+============================
+
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+
+        int[] result = new int[nums.length];
+
+
+        p = 1 
+        for(int i = 0 ; i < nums.length ; i++){
+            result[i] = p;
+            p = p * nums[i];
+        }
+
+        p = 1
+        for(int i = nums.length - 1 ; i >= 0 ; i--){
+            result[i] = result[i] * p;
+            p = p * nums[i];
+        }
+        return result
+        
+    }
+}
