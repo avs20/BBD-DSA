@@ -1,0 +1,130 @@
+## Stack 
+"""
+
+Basically 3 operations are performed on stack:
+- Push: Add an element to the top of a stack
+- Pop: Remove an element from the top of a stack
+- Peek: Get the top element of the stack without removing it
+
+
+Stack is a LIFO (Last In First Out) data structure. 
+
+Stack in python can be implemented using list. 
+Stack in java can be implemented using ArrayList or LinkedList.
+"""
+
+class Stack:
+    def __init__(self):
+        self.stack = []
+    
+    def push(self, x):
+        self.stack.append(x)
+    
+    def pop(self):
+        if len(self.stack) == 0:
+            return None
+        return self.stack.pop()
+    
+    def peek(self):
+        if len(self.stack) == 0:
+            return None
+        return self.stack[-1]
+
+# BASEBALL GAME LEETCODE 648    
+"""
+An integer x.
+Record a new score of x.
+'+'.
+Record a new score that is the sum of the previous two scores.
+'D'.
+Record a new score that is the double of the previous score.
+'C'.
+Invalidate the previous score, removing it from the record.
+"""
+class Solution:
+    def calPoints(self, operations: List[str]) -> int:
+        stack = []
+
+        for op in operations:
+            if op == "+":
+                b = stack.pop()
+                a = stack.pop()
+                val = a + b
+                stack.append(a)
+                stack.append(b)
+                stack.append(val)
+            elif op == "C":
+                stack.pop()
+            elif op == "D":
+                val = stack[-1]
+                stack.append(val*2)
+            else:
+                stack.append(int(op))
+
+        return sum(stack)
+    
+
+============================
+cleaner 
+
+class Solution:
+    def calPoints(self, operations: List[str]) -> int:
+        stack = []
+
+        for op in operations:
+            if op == "+":
+                b, a = stack.pop(), stack.pop()
+                val = a + b
+                stack.append(a)
+                stack.append(b)
+                stack.append(val)
+            elif op == "C":
+                stack.pop()
+            elif op == "D":
+                val = stack[-1]
+                stack.append(val*2)
+            else:
+                stack.append(int(op))
+
+        return sum(stack)
+    
+=====================
+JAVA 
+
+import java.util.List;
+import java.util.Stack;
+
+public class Solution {
+    public int calPoints(List<String> operations) {
+        Stack<Integer> stack = new Stack<>();
+
+        for (String op : operations) {
+            switch (op) {
+                case "+":
+                    int b = stack.pop();
+                    int a = stack.pop();
+                    int val = a + b;
+                    stack.push(a);
+                    stack.push(b);
+                    stack.push(val);
+                    break;
+                case "C":
+                    stack.pop();
+                    break;
+                case "D":
+                    val = stack.peek();
+                    stack.push(val * 2);
+                    break;
+                default:
+                    stack.push(Integer.parseInt(op));
+            }
+        }
+
+        int sum = 0;
+        for (int score : stack) {
+            sum += score;
+        }
+
+        return sum;
+    }
+}
