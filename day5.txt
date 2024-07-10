@@ -304,4 +304,79 @@ public class Solution {
 }
 
 
+========================
+Min Stack 
+
+
+class MinStack:
+
+    def __init__(self):
+        self.stack = []
+        self.minstack = [] # to keep min value until now
+
+    def push(self, val: int) -> None:
+        self.stack.append(val)
+        if len(self.minstack) == 0 or val <= self.minstack[-1]:
+            self.minstack.append(val)
+        
+
+    def pop(self) -> None:
+        
+        self.minstack.pop()
+        self.stack.pop()
+
+        
+
+    def top(self) -> int:
+        return self.stack[-1]
+        
+
+    def getMin(self) -> int:
+        return self.minstack[-1]
+
+
+# Your MinStack object will be instantiated and called as such:
+# obj = MinStack()
+# obj.push(val)
+# obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.getMin()
+
+====================
+java
+import java.util.ArrayList;
+
+public class MinStack {
+    private ArrayList<Integer> stack;
+    private ArrayList<Integer> minStack;
+
+    public MinStack() {
+        this.stack = new ArrayList<>();
+        this.minStack = new ArrayList<>();
+    }
+
+    public void push(int val) {
+        stack.add(val);
+        if (minStack.isEmpty() || val <= minStack.get(minStack.size() - 1)) {
+            minStack.add(val);
+        }
+    }
+
+    public void pop() {
+        int val = stack.remove(stack.size() - 1);
+        if (val == minStack.get(minStack.size() - 1)) {
+            minStack.remove(minStack.size() - 1);
+        }
+    }
+
+    public int top() {
+        return stack.get(stack.size() - 1);
+    }
+
+    public int getMin() {
+        return minStack.get(minStack.size() - 1);
+    }
+}
+
+
         
