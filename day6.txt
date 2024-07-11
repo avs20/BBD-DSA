@@ -214,3 +214,46 @@ class Solution:
 
         
         return res + sign * cur
+    
+
+
+==========================
+2, 1, 5 , 6, 2 3 
+
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+      
+      area = 0 
+      for i in range(len(heights):
+         for j in range(i + 1, len(heights)):
+            minHeight = float('inf')
+            for k in range(i, j+1):
+               minHeight = min(minHeight, heights[k])
+            area = max(area, minHeight * (j - i + 1))
+
+    return area
+         
+         
+
+
+===============================
+Max Area in histogram 
+
+
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        maxArea = 0 
+        stack = []
+
+        for i, h in enumerate(heights):
+            start = i 
+            while stack and stack[-1][1] > h:
+                index, height = stack.pop()
+                maxArea = max(maxArea, height * (i-index))
+                start = index
+            stack.append((start, h))
+        
+        for i, h in stack:
+            maxArea = max(maxArea, h * (len(heights)-i))
+        
+        return maxArea
