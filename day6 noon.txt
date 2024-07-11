@@ -1,0 +1,224 @@
+"1 + 1"
+
+1
+res = 0 
+cur = 1
+
++ 
+res = res + cur : 1 
+cur = 0 
+
+1
+cur = 1 
+
+on string over 
+res = res + cur : 1 + 1 = 2
+
+
+==============================
+"45 + 20"
+
+4 
+cur = 4
+
+5 
+cur = 5 
+
++ 
+
+res = res + cur = 0 + 5 
+
+2
+cur = 2
+
+0 
+
+cur = 0
+
+res = res + cur = 5 + 0 = 5
+
+# number can be multiple digits 
+
+"45 + 20"
+
+45 
+
+cur = 0 
+cur = cur * 10 + d
+cur = 0 * 10 + 4 = 4
+
+5 
+cur = cur * 10 + d 
+    = 4 * 10 + 5 
+    = 45 
+
+for i in range(len(s)):
+    if s[i].isdigit():
+        cur = cur * 10 + int(s[i])
+
+=================================
+"4 + 2 -3"
+
+cur = 0 
+res = 0 
+
+4
+cur = 4 
+
++ 
+res = res + cur = 4 
+
+2
+cur = 2 
+
+-
+res = res + cur = 4 + 2 = 6
+
+3
+cur = 3
+
+res = res + cur = 6 + 3 = 9
+
+=======================
+"4 + 2  -3"
+
+cur = 0 
+res = 0 
+sign = 1 -> +ve num -1 -ve num 
+4
+
+cur = 4 
++
+res = res + sign * cur = 0 + 4 = 4
+cur = 0 
+sign = 1 
+
+2 
+cur = 2 
+
+-
+res = res + sign * cur = 4 + 1 * 2 = 6
+sign = -1 
+
+3
+cur = 3 
+
+res = res + cur * sign = 6 + 3 * -1 = 6-3 = 3 
+
+
+(1+(4+5+2)-3)
+
+when open 
+res, sign -> insert into stack 
+
+when close -> 
+
+cur result + prev sign * prev result 
+
+(1+(4+5+2)-3)
+
+cur = 0 
+res = 0 
+sign = 1 
+
+
+(
+
+stack = [0, 1]
+
+1
+cur = 1 
+
++ 
+res = res + cur * sign 
+res = 0 + 1 * 1 = 1 
+cur = 0 
+sign = 1 
+
+(
+stack = [0,1 , 1, 1]
+cur = 0 
+res = 0 
+sign = 1 
+
+4+5+2)-3)
+
+4 
+cur = 4 
+
++ 
+res = res + cur * sign = 0+4* 1 = 4 
+sign = 1 
+
+5 
+cur = 5
+
++ 
+res = res + cur * sign = 4 + 5*1 = 9 
+sign = 1
+cur = 0
+2 
+cur = 2 
+
+)
+res = res + cur * sign = 9 + 1 * 2 = 11 
+
+stack = [0,1,1,1]
+sign = stack.pop() = 1 
+old_res = stack.pop() = 1 
+
+stack = [0,1]
+res = old_res + sign * res = 1 + 1 * 11 = 12
+
+cur = 0 
+
+
+- 
+res = res + cur * sign = 12 + 0 = 12 
+sign = -1 
+
+3 
+cur = 3 
+
+)
+res = res + cur * sign = 12 + 3 * -1 = 9 
+
+sign = stack.pop() = 1 
+old_res = stack.pop() = 0 
+
+res = old_res + sign * res = 0 + 1 * 9 = 9 
+
+
+
+class Solution:
+    def calculate(self, s: str) -> int:
+        cur = 0 
+        res = 0 
+        sign = 1 
+        stack = []
+
+        for c in s:
+            if c.isdigit():
+                cur = cur * 10 + int(c)
+            elif c in ["+", "-"]:
+                res = res + sign * cur 
+                cur = 0 
+                if c  == "+":
+                    sign = 1 
+                else:
+                    sign = -1
+
+            elif c == "(":
+                stack.append(res)
+                stack.append(sign)
+                res = 0
+                sign = 1
+            elif c == ")":
+                res = res + cur * sign 
+                cur = 0
+                sign = stack.pop()
+                old_res = stack.pop()
+                res = old_res + res*sign 
+        
+        res = res + cur * sign
+        return res
