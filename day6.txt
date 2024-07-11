@@ -1,0 +1,25 @@
+Time : 4*O(n) = O(n) | Space : 2O(n) = O(n)
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        
+        leftMax = [0] * len(height)
+        rightMax = [0] * len(height)
+
+        lMax, rMax = 0, 0
+
+        for i in range(len(height)):
+            leftMax[i] = lMax 
+            lMax = max(lMax, height[i])
+
+        for i in reversed(range(len(height))):
+            rightMax[i] = rMax
+            rMax = max(rMax, height[i])
+        
+        area = 0 
+        for i in range(len(height)):
+            minHeight = min(leftMax[i], rightMax[i])
+            if minHeight > height[i]:
+                area += minHeight - height[i]
+        
+        return area
+                          
