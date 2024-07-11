@@ -260,3 +260,62 @@ class MinStack:
 # obj.pop()
 # param_3 = obj.top()
 # param_4 = obj.getMin()
+
+
+[2, 5, 1, 4 , 3]
+
+minVal = inf 
+for i in range(len(nums)):
+    if nums[i] < minVal:
+        minVal = nums[i]
+    
+1    
+
+============================
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+    
+        stack = []
+        area = 0 
+        for i, h in enumerate(heights):
+            start = i
+            if len(stack) == 0 or stack[-1][1] < h:
+                stack.append([i, h])
+            
+            while len(stack) > 0 and stack[-1][1] > h:
+                idx, hei = stack.pop()
+                area = max(area, hei * (i-idx))
+                start = i 
+            
+            stack.push([i,h])
+
+        while len(stack) > 0:
+            i, h = stack.pop()
+            area = max(area, (len(heights)-i) * h)
+
+        return area 
+            
+
+=====================
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+    
+        stack = []
+        area = 0 
+        for i, h in enumerate(heights):
+            start = i
+            
+            while len(stack) > 0 and stack[-1][1] > h:
+                idx, hei = stack.pop()
+                area = max(area, hei * (i-idx))
+                start = idx
+            
+            stack.append([start,h])
+
+        while len(stack) > 0:
+            i, h = stack.pop()
+            area = max(area, (len(heights)-i) * h)
+
+        return area 
+            
+
