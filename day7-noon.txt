@@ -148,3 +148,245 @@ public class Solution {
         return slow;
     }
 }
+
+==============================
+PYTHON merge sorted list 
+===============================
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        
+        p1p = ListNode()
+        head = p1p 
+        p1 = list1
+        p2 = list2
+        
+        while p1 is not None and p2 is not None:
+            if p1.val <= p2.val:
+                p1p.next = p1 
+                p1 = p1.next 
+            else:
+                p1p.next = p2
+                p2 = p2.next
+            
+            p1p = p1p.next 
+        
+        if p1 is None:
+            p1p.next = p2 
+        elif p2 is None:
+            p1p.next = p1
+        
+        return head.next
+        
+====================
+JAVA
+====================
+public class Solution {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode p1 = list1, p2 = list2;
+        ListNode p1p = new ListNode();
+        ListNode head = p1p;
+
+        while (p1 != null && p2 != null) {
+            if (p1.val <= p2.val) {
+                p1p.next = p1;
+                p1 = p1.next;
+            } else {
+                p1p.next = p2;
+                p2 = p2.next;
+            }
+
+            p1p = p1p.next;
+        }
+
+        if (p1 == null) {
+            p1p.next = p2;
+        } else if (p2 == null) {
+            p1p.next = p1;
+        }
+
+        return head.next;
+    }
+}
+
+==================
+LRU __cached_
+==================
+
+class DoublyLinkedListNode:
+    def __init__(self, key, value):
+        self.key = key 
+        self.value = value 
+        self.next = None
+        self.prev = None 
+
+
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def __repr__(self):
+        pass
+
+
+    def addNewNode(self, key, value):
+        node = DoublyLinkedListNode(key, value)
+
+        if self.head is None:
+            self.head = node 
+            self.tail = node
+        else:
+            node.next = self.head 
+            self.head.prev = node 
+            self.head = node 
+
+    def deleteFromTail(self):
+        if self.tail is None:
+            return "None"
+        
+        # now there can be 1 element in the dll which is head and tail both.
+        # In this case the previos will be None 
+        nodeToRemove = self.tail 
+        if nodeToRemove.prev :
+            # there is one more element before tail 
+            self.tail = nodeToRemove.prev 
+            self.tail.next = None
+        else:
+            # this is the only node in the dll 
+            self.head = None 
+            self.tail = None  
+        
+        nodeToRemove.prev = None 
+        return nodeToRemove
+        
+    def setToHead(self, node):
+        """
+        This function sets the give node as the head of the dll
+        
+        """
+
+        if self.head is None:
+            self.head = node 
+            self.tail = node 
+
+        if self.head.key == node.key:
+            return  # as node is already set to head 
+
+        # now node exists and it's not a top node. 
+        node = self.removeFromList(node)
+        node.next = self.head 
+        self.head.prev = node 
+        self.head = node 
+
+    def removeFromList(self, node):
+        """
+        Removes a given node from the list 
+        """
+        prevNode = node.prev 
+        nextNode = node.next
+        if prevNode is not None:
+            prevNode.next = nextNode
+        if nextNode is not None:
+            nextNode.prev = prevNode 
+
+        node.prev = None
+        node.next = None 
+        if self.head == node :
+            self.head = nextNode
+        if self.tail == node:
+            self.tail = prevNode
+
+        return node
+
+            
+    def evictLastNode(self):
+        """
+        Need to remove the last node which is pointed by tail/ 
+        This will be used to evict the node. 
+
+        """
+        return self.deleteFromTail()
+
+
+class LRUCache:
+    def __init__(self, capacity ):
+        self.capacity = capacity
+        self.cache = {}
+        self.listOfNodes = DoublyLinkedList()
+
+
+    def get(self, key):
+        """
+        Whate is the get operation in LRU 
+        1. if the key exists then return the value. 
+        2. Set the key as the mru -> set to head 
+        3. if the key not exists then return -1 
+        """
+
+        # check if key exist in cache
+        if key in self.cache:
+            node = self.cache[key] 
+            self.listOfNodes.setToHead(node)   
+            return node.value
+        else:
+            return -1 
+
+
+    def put(self, key, value):
+        """
+        Insert in LRU cache :
+        if the capacity is < maxCapacity, then add to cache and make it head 
+        if the capacity == maxCapacity then drop the lru and add to cahce 
+
+        In both cases we have to add to cache.  
+
+        Also had to keep case when it already exists in cache
+        
+        """
+
+        # already exists 
+        if key in self.cache:
+            node = self.cache[key]
+            node.value = value
+            self.listOfNodes.setToHead(node)
+            # keep in mind if the node is between 2 nodes
+            return 
+
+                   
+        if self.capacity == 0 :
+            removedNode = self.listOfNodes.evictLastNode()
+            del self.cache[removedNode.key]
+            self.capacity += 1
+
+        node = DoublyLinkedListNode(key, value)
+        self.cache[key] = node 
+        self.listOfNodes.setToHead(self.cache[key])
+        self.capacity -= 1
+        
+
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
+
+=======================
+JAVA
+=======================
+class DoublyLinkedListNode {
+    int key;
+    int value;
+    DoublyLinkedListNode next;
+    DoublyLinkedListNode prev;
+
+    public DoublyLinkedListNode(int key, int value) {
+        this.key = key;
+        this.value = value;
+    }
+}
+
