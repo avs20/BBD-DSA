@@ -78,3 +78,73 @@ public class Solution {
         return false;
     }
 }
+
+=============================
+Middle 
+==============
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        arr = []
+        cur = head 
+        while cur is not None:
+            arr.append(cur)
+            cur = cur.next 
+        
+        middle = len(arr) // 2
+        return arr[middle]
+    
+====================
+JAVA
+====================
+public class Solution {
+    public ListNode middleNode(ListNode head) {
+        List<ListNode> arr = new ArrayList<>();
+        ListNode cur = head;
+        while (cur != null) {
+            arr.add(cur);
+            cur = cur.next;
+        }
+
+        int middle = arr.size() / 2;
+        return arr.get(middle);
+    }
+}
+
+App2
+==========
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        
+        slow, fast = head, head 
+
+        while fast is not None and fast.next is not None:
+            slow = slow.next
+            fast = fast.next.next 
+
+        return slow
+    
+==================
+JAVA
+==================
+public class Solution {
+    public ListNode middleNode(ListNode head) {
+        ListNode slow = head, fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+}
