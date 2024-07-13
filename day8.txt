@@ -135,6 +135,30 @@ class Solution:
         
         return ans + 1 if odd else ans
 
+=============================
+JAVA
+=============================
+import java.util.HashMap;
+
+public class Solution {
+    public int longestPalindrome(String s) {
+        HashMap<Character, Integer> hmap = new HashMap<>();
+        for (char ch : s.toCharArray()) {
+            hmap.put(ch, hmap.getOrDefault(ch, 0) + 1);
+        }
+
+        int ans = 0;
+        boolean odd = false;
+        for (int value : hmap.values()) {
+            ans += value / 2 * 2;
+            if (value % 2 == 1) {
+                odd = true;
+            }
+        }
+
+        return odd ? ans + 1 : ans;
+    }
+}
         
 
 ==========================
