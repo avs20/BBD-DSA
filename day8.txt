@@ -1,0 +1,111 @@
+class Solution:
+    # O(n) | O(n)
+    def isPalindrome(self, s: str) -> bool:
+        arr = []
+        for ch in s:
+            if ch.isalnum():
+                arr.append(ch.lower())
+        
+        return arr == arr[::-1]
+        
+
+=======================
+# using left and right pointers
+
+class Solution:
+    # O(n) | O(1)
+    def isPalindrome(self, s: str) -> bool:
+        l = 0
+        r = len(s) -1 
+
+        while l < r :
+
+            while l < r  and not s[l].isalnum():
+                l += 1
+            while r > l and not [r].isalnum():
+                r -= 1 
+            
+            if s[l].lower() != s[r].lower():
+                return False
+            l += 1
+            r -= 1
+
+        return True
+    
+======================
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        sCount = {}
+        tCount = {}
+
+        for ch in s:
+            sCount[ch] = sCount.get(ch, 0) + 1
+        
+        for ch in t:
+            tCount[ch] = tCount.get(ch, 0) + 1
+        
+        return sCount == tCount
+    
+
+======================
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        sCount = Counter(s)
+        tCount = Counter(s)
+    
+        return sCount == tCount
+
+==========================
+Longest Palindrome
+==========================
+class Solution:
+    def longestPalindrome(self, s: str) -> int:
+        hmap = {}
+        for ch in s:
+            hmap[ch] = hmap.get(ch,0) + 1
+        
+        ans = 0
+        odd = False
+        for key, value in hmap.items():
+            ans += value // 2 * 2
+            if value % 2 :
+                odd = True
+        
+        return ans + 1 if odd else ans
+
+        
+
+==========================
+Longest substring without repeating characters
+==========================
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        
+        l = 0
+        r = 0 
+        hmap = {}
+
+        res = 0
+        while r < len(s):
+            ch = s[r]
+            hmap[ch] = hmap.get(ch,0) + 1
+
+            while hmap[s[r]] > 1:
+                hmap[s[l]] = hmap[s[l]] - 1
+                l += 1 
+
+            res = max(res, r-l+1)
+
+            r += 1
+        
+        return res
+            
+
+
+        
+        
+
